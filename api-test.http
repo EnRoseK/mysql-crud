@@ -1,0 +1,32 @@
+GET http://localhost:8000/category
+
+###
+
+GET http://localhost:8000/category/1
+
+###
+
+POST http://localhost:8000/category
+content-type: application/json
+
+{
+  "name": "Test",
+  "slug": "test3",
+  "imageAddress": ""
+}
+
+###
+
+PATCH http://localhost:8000/category/2
+Content-Type: application/json
+
+{
+  "name": "Techno",
+  "slug": "techno",
+  "imageAddress": "img",
+  "productCount": 10 
+}
+
+###
+
+DELETE http://localhost:8000/category/4
