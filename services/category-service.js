@@ -1,37 +1,69 @@
 import pool from '../config/mysql-config.js';
+import { nanoid } from 'nanoid';
 
 export const getCategories = async () => {
-  const [result] = await pool.query('select * from category');
+  try {
+    const [result] = await pool.query(`select * from category`);
 
-  return result;
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
-export const getSingleCategory = async (id) => {
-  const [[result]] = await pool.query(`select * from category where id = ?`, [id]);
+export const getCategory = async (categoryId) => {
+  try {
+    const [[result]] = await pool.query(`select * from category where categoryId = ?`, [categoryId]);
 
-  return result;
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
-export const createCategory = async (name, slug, imageAddress) => {
-  const [result] = await pool.query(
-    `insert into category (name, slug, imageAddress, createdAt) values (?, ?, ?, now())`,
-    [name, slug, imageAddress]
-  );
+export const createCategory = async (category) => {
+  try {
+    const categoryId = nanoid();
 
-  return result;
+    await pool.query(
+      `insert into category (categoryId, name, slug, parent_id, created, createdAt ) values (?, ?, ?, ?, ?, ?)`,
+      [categoryId, category.name, category.slug, category.parentId, category.created, new Date()]
+    );
+
+    const result = await getCategory(categoryId);
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
-export const updateCategory = async (name, slug, imageAddress, productCount, id) => {
-  const [result] = await pool.query(
-    `update category set name = ?, slug = ?, imageAddress = ?, productCount = ? where id = ?`,
-    [name, slug, imageAddress, productCount, id]
-  );
+export const updateCategory = async (category) => {
+  try {
+    await pool.query(
+      `update category set name = ?, slug = ?, parent_id = ?, updated = ?, updatedAt = ? where categoryId = ?`,
+      [category.name, category.slug, category.parentId, category.updated, new Date(), category.categoryId]
+    );
 
-  return result;
+    const result = await getCategory(category.categoryId);
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 };
 
-export const deleteCategory = async (id) => {
-  const [result] = await pool.query(`delete from category where id = ?`, [id]);
+export const deleteCategory = async (categoryId) => {
+  try {
+    await pool.query(`delete from category where categoryId = ?`, [categoryId]);
 
-  return result;
+    return categoryId;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };

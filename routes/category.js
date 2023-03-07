@@ -1,57 +1,49 @@
 import express from 'express';
 import {
+  getCategories,
+  getCategory,
   createCategory,
   deleteCategory,
-  getCategories,
-  getSingleCategory,
   updateCategory,
 } from '../services/category-service.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  res.json(await getCategories());
+  const result = await getCategories();
+  res.json(result);
 });
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
+  const result = await getCategory(id);
 
-  try {
-    res.json(await getSingleCategory(id));
-  } catch (err) {
-    res.status(400).json('Something went wrong!');
-  }
+  res.json(result);
 });
 
 router.post('/', async (req, res) => {
-  const { name, slug, imageAddress } = req.body;
+  const { name, slug, parentId, created } = req.body;
 
-  try {
-    res.json(await createCategory(name, slug, imageAddress));
-  } catch (err) {
-    res.status(400).json('Something went wrong!');
-  }
+  const result = await createCategory({ name, slug, parentId, created });
+
+  res.json(result);
 });
 
 router.patch('/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, slug, imageAddress, productCount } = req.body;
+  const { name, slug, parentId, updated } = req.body;
 
-  try {
-    res.json(await updateCategory(name, slug, imageAddress, productCount, id));
-  } catch (err) {
-    res.status(500).json('Something went wrong!');
-  }
+  const result = await updateCategory({ name, slug, parentId, updated, categoryId: id });
+
+  res.json(result);
 });
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
-  try {
-    res.json(await deleteCategory(id));
-  } catch (err) {
-    res.status(500).json('Something went wrong!');
-  }
+  const result = await deleteCategory(id);
+
+  res.json(result);
 });
 
 export default router;

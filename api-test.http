@@ -1,32 +1,94 @@
-GET http://localhost:8000/category
+GET http://localhost:8000/users
 
 ###
 
-GET http://localhost:8000/category/1
+GET http://localhost:8000/users/bjpDp4Vr-w8a_X821L8cH
 
 ###
 
-POST http://localhost:8000/category
-content-type: application/json
-
-{
-  "name": "Test",
-  "slug": "test3",
-  "imageAddress": ""
-}
-
-###
-
-PATCH http://localhost:8000/category/2
+POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "name": "Techno",
-  "slug": "techno",
-  "imageAddress": "img",
-  "productCount": 10 
+  "firstname": "Javkhlant",
+  "lastname": "Altankhuyag",
+  "birthdate": "1999-02-20",
+  "email": "enrosek95@gmail.com",
+  "phone": "88916562",
+  "password": "",
+  "imageUrl": ""
 }
 
 ###
 
-DELETE http://localhost:8000/category/4
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+  "firstname": "TestUser",
+  "lastname": "User",
+  "birthdate": "1999-02-20",
+  "email": "enrose@gmail.com",
+  "phone": "88116112",
+  "password": "",
+  "imageUrl": ""
+}
+
+###
+PATCH http://localhost:8000/users/Z3yh9uAU83CrhIME7oJ_m
+Content-Type: application/json
+
+{
+  "firstname": "TestUser",
+  "lastname": "User",
+  "birthdate": "1999-02-20",
+  "email": "enrose@gmail.com",
+  "phone": "88299218",
+  "password": "",
+  "imageUrl": ""
+}
+
+###
+DELETE http://localhost:8000/users/P2aRq35Bd5qI0kFKgpByo
+
+###
+GET http://localhost:8000/categories
+
+###
+GET http://localhost:8000/categories/gbSntonDuQcFjo2mxqA-u
+
+###
+POST http://localhost:8000/categories
+Content-Type: application/json
+
+{
+  "name": "Shoes",
+  "slug": "shoes",
+  "parentId": null,
+  "created": "bjpDp4Vr-w8a_X821L8cH"
+}
+
+###
+POST http://localhost:8000/categories
+Content-Type: application/json
+
+{
+  "name": "TEst",
+  "slug": "test",
+  "parentId": null,
+  "created": "bjpDp4Vr-w8a_X821L8cH"
+}
+
+###
+PATCH http://localhost:8000/categories/xWQO5IcciSGHuXZ8c3YJf
+Content-Type: application/json
+
+{
+  "name": "TEst2",
+  "slug": "test2",
+  "parentId": null,
+  "updated": "bjpDp4Vr-w8a_X821L8cH"
+}
+
+###
+DELETE http://localhost:8000/categories/252NL7wKNm3Xg8b3-4dQo
