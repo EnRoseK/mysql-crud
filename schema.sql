@@ -1,4 +1,4 @@
--- Active: 1678342588801@@127.0.0.1@3306@ecommerce
+-- Active: 1678169845281@@127.0.0.1@3307@ecommerce_evening
 CREATE TABLE user(  
     userId VARCHAR(255) NOT NULL,
     firstname VARCHAR(255),

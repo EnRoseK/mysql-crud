@@ -1,63 +1,54 @@
-import express from 'express';
+import express from "express";
 import {
   getProducts,
-  getSingleProduct,
+  getProduct,
   createProduct,
-  updateProduct,
-  deleteProduct,
-} from '../services/product-service.js';
+} from "../services/product-service.js";
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  res.json(await getProducts());
+router.get("/", async (req, res) => {
+  const result = await getProducts();
+  res.json(result);
 });
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  try {
-    const result = await getSingleProduct(id);
-    res.json(result);
-  } catch (err) {
-    res.status(400).json('Something went wrong');
-  }
+  const result = await getProduct(id);
+
+  res.json(result);
 });
 
-router.post('/', async (req, res) => {
-  const { name, description, price, imgUrl } = req.body;
+router.post("/", async (req, res) => {
+  const {
+    categoryId,
+    name,
+    slug,
+    description,
+    imageUrl,
+    text,
+    price,
+    discountPrice,
+    remaining,
+    rating,
+    created,
+  } = req.body;
 
-  try {
-    const result = await createProduct(name, description, price, imgUrl);
+  const result = await createProduct({
+    categoryId,
+    name,
+    slug,
+    description,
+    imageUrl,
+    text,
+    price,
+    discountPrice,
+    remaining,
+    rating,
+    created,
+  });
 
-    res.json(result);
-  } catch (err) {
-    res.status(500).json('Something went wrong');
-  }
-});
-
-router.patch('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { name, description, price, imgUrl } = req.body;
-
-  try {
-    const result = await updateProduct(name, description, price, imgUrl, id);
-
-    res.json(result);
-  } catch (err) {
-    res.status(500).json('Something went wrong');
-  }
-});
-
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const result = await deleteProduct(id);
-
-    res.json(result);
-  } catch (err) {
-    res.status(500).json('Something went wrong');
-  }
+  res.json(result);
 });
 
 export default router;
