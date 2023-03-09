@@ -1,4 +1,4 @@
--- Active: 1678169845281@@127.0.0.1@3307@ecommerce_evening
+-- Active: 1678342588801@@127.0.0.1@3306@ecommerce
 CREATE TABLE user(  
     userId VARCHAR(255) NOT NULL,
     firstname VARCHAR(255),
@@ -35,3 +35,26 @@ CREATE TABLE category(
     FOREIGN KEY(created) REFERENCES user(userId) ON UPDATE CASCADE,
     FOREIGN KEY(updated) REFERENCES user(userId) ON UPDATE CASCADE
 );
+
+CREATE TABLE product(
+    productId VARCHAR(255) NOT NULL,
+    categoryId VARCHAR(255),
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL,
+    description VARCHAR(1000),
+    imageUrl VARCHAR(1000),
+    text TEXT,
+    price INT,
+    discountPrice INT,
+    remaining INT DEFAULT 0,
+    readCount INT DEFAULT 0,
+    rating DECIMAL(2, 1),
+    created VARCHAR(255),
+    createdAt TIMESTAMP,
+    updated VARCHAR(255),
+    updatedAt TIMESTAMP,
+    PRIMARY KEY(productId),
+    Foreign Key (categoryId) REFERENCES category(categoryId) on UPDATE CASCADE,
+    Foreign Key (created) REFERENCES user(userId) on UPDATE CASCADE,
+    Foreign Key (updated) REFERENCES user(userId) on UPDATE CASCADE
+)
